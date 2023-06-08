@@ -1,0 +1,9 @@
+{
+  "name": "BootLeafShopDemo",
+  "version": "1.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "leaflet": "^1.9.4"
+  }
+}

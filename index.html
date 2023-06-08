@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/node_modules/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="/index.css" />
+    <title>Demo For Shops Display</title>
+</head>
+<body>
+<h2>Demo Shops on Map</h2>
+<div id="map"></div>
+    
+</body>
+<script src="/node_modules/leaflet/dist/leaflet.js">
+</script>
+<script src="https://unpkg.com/deck.gl@^8.8.0/dist.min.js"></script>
+<script src="https://unpkg.com/deck.gl-leaflet@1.2.1/dist/deck.gl-leaflet.min.js"></script>
+<script>
+    var map = L.map('map').setView([48.859532478229525, 2.3391385775182054], 10);
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+ 
+function createSVGIcon(idx) {
+  return `
+    <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="12" cy="12" r="10" fill="rgb(${idx * 20}, 0, 0)" stroke="#fa1" stroke-width="2"/>
+    </svg>
+  `;
+}
+
+function svgToDataURL(svg) {
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+}
+
+const coordinatesData=[[2.312856407342722,48.85620993222179],[ 2.322487634359587,48.85651168730729],[2.32517344522666,48.85286112235035]];
+
+const deckLayer = new DeckGlLeaflet.LeafletLayer({
+        views: [
+          new deck.MapView({
+            repeat: true
+          })
+        ],
+        layers: [
+         
+        new  deck.IconLayer({
+  id: 'icon-layer',
+  data: coordinatesData,
+  getIcon: (d, { index }) => ({
+    url: "./store-2017.svg",
+    width: 24,
+    height: 24
+  }),
+  sizeScale: 10,
+  getSize: d => 4,
+  getPosition: d => d
+})
+        ],
+      });
+
+ 
+
+map.addLayer(deckLayer);
+
+
+
+</script>
+
+</html>
+
+
